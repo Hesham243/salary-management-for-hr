@@ -60,4 +60,27 @@ router.delete('/:employeeId', isSignedIn, async (req, res) => {
 })
 
 
+router.get('/:employeeId/edit', isSignedIn, async (req, res) => {
+  const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
+
+  if(foundEmployee.user._id.equals(req.session.user._id)) {
+    return res.render('employees/edit.ejs', { foundEmployee: foundEmployee })
+  }
+  return res.send('Not Authorized')
+})
+
+
+router.put('/:employeeId', isSignedIn, async (req, res) => {
+  const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
+
+  if (foundEmployee.user._id.equals(req.session.user._id)) {
+    const updatedEmployee = await Employee.findByIdAndUpdate(req.params.employeeId, req.body, { new: true })
+    console.log('This is the updated employee from db:', updatedEmployee)
+    return res.redirect(`/employees/${req.params.employeeId}`)
+  }
+
+  return res.send('Not Authorized')
+})
+
+
 module.exports = router

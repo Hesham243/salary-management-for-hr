@@ -11,12 +11,12 @@
   <li><%= foundEmployee.position %></li>
   <li><%= foundEmployee.salary %></li>
 
-  <a href="">Edit Employee Informations</a>
-
   <% if (foundEmployee.user._id.equals(user._id)) { %>
     <form action="/employees/<%= foundEmployee._id %>?_method=DELETE" method="POST">
     <button type="submit" >Delete</button>
   </form>
+
+  <a href="/employees/<%= foundEmployee._id %>/edit">Edit Employee Informations</a>
   <% } %>
   
 </body>
