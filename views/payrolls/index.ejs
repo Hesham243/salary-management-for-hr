@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>List of all payrolls for </h2>
+
+  <ul>
+  <% foundPayrolls.forEach( (payroll) => { %>
+    <li>Employee Name: <%= payroll.employee.name %></li>
+    <li>Position: <%= payroll.employee.position %></li>
+    <li>Pay Date: <%= payroll.pay_date %></li>
+    <li>Hours Worked: <%= payroll.hourse_worked %></li>
+    <li>Bonus: <%= payroll.bonus %></li>
+    <br>
+  <% }) %>
+  </ul>
+
+  
+</body>
+</html>

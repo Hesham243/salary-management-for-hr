@@ -11,6 +11,8 @@ const authController = require('./controllers/auth.controller')
 const isSignedIn = require('./middleware/is-signed-in')
 const passUserToView = require('./middleware/pass-user-to-view')
 const employeesController = require('./controllers/employees.controller')
+const payrollsController = require('./controllers/payrolls.controller')
+
 
 
 // DATABASE CONNECTION
@@ -46,6 +48,8 @@ app.get('/vip-lounge', isSignedIn, (req, res) => {
 })
 
 app.use('/employees', employeesController)
+
+app.use('/payrolls', payrollsController)
 
 const port = process.env.PORT ? process.env.PORT : "3000"
 app.listen(port, () => {
