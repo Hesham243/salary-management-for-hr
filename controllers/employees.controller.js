@@ -3,10 +3,12 @@ const router = express.Router()
 const isSignedIn = require('../middleware/is-signed-in')
 const Employee = require('../models/employee')
 
+
 // get the user new form to add employee
 router.get('/new', (req, res) => {
   res.render('employees/new.ejs') 
 })
+
 
 // post the new employee to the db
 router.post('/', isSignedIn, async (req, res) => {
@@ -22,6 +24,7 @@ router.post('/', isSignedIn, async (req, res) => {
   }
 })
 
+
 //  getting all employees from db and rendering them in employees.index.ejs
 router.get('/', async (req, res) => {
   try {
@@ -33,6 +36,7 @@ router.get('/', async (req, res) => {
     res.send('Something went wrong in viewing all employees')
   }
 })
+
 
 // getting a specific employee from db then rendering him to employees/show.ejs
 router.get('/:employeeId', async (req, res) => {
@@ -60,6 +64,7 @@ router.delete('/:employeeId', isSignedIn, async (req, res) => {
 })
 
 
+// getting a specific employee from db then rendering it to employees/edit.ejs
 router.get('/:employeeId/edit', isSignedIn, async (req, res) => {
   const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
 
@@ -70,6 +75,7 @@ router.get('/:employeeId/edit', isSignedIn, async (req, res) => {
 })
 
 
+// updating employee information from db
 router.put('/:employeeId', isSignedIn, async (req, res) => {
   const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
 
@@ -78,7 +84,6 @@ router.put('/:employeeId', isSignedIn, async (req, res) => {
     console.log('This is the updated employee from db:', updatedEmployee)
     return res.redirect(`/employees/${req.params.employeeId}`)
   }
-
   return res.send('Not Authorized')
 })
 
