@@ -9,6 +9,8 @@ const MongoStore = require('connect-mongo')
 const authController = require('./controllers/auth.controller')
 const isSignedIn = require('./middleware/is-signed-in')
 const passUserToView = require('./middleware/pass-user-to-view')
+const employeesController = require('./controllers/employees.controller')
+
 
 // DATABASE CONNECTION
 mongoose.connect(process.env.MONGODB_URI)
@@ -31,7 +33,7 @@ app.use(session({
 app.use(passUserToView)
 
 app.get('/', (req, res) => {
-    res.render('index.ejs', { title: 'my App'})
+    res.render('index.ejs', { title: 'Salary Mgt'})
 })
 
 // ROUTES
@@ -40,6 +42,8 @@ app.use('/auth', authController)
 app.get('/vip-lounge', isSignedIn, (req, res) => {
     res.send(`Welcome ✨`)
 })
+
+app.use('/employees', employeesController)
 
 const port = process.env.PORT ? process.env.PORT : "3000"
 app.listen(port, () => {
