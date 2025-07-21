@@ -9,11 +9,13 @@
 <% if (user) { %>
 <h1>Welcome to the app, <%= user.username %>!</h1>
 <a href="/auth/sign-out">Sign out</a>
+<a href="/employees/new">Add  a Employee</a>
 <% } else { %>
-<h1>Welcome to the app, guest.</h1>
-<p>
-  <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">sign in</a>.
-</p>
-<% } %>
+  <h1>Welcome to the app, guest.</h1>
+  <p>
+    <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">sign in</a>.
+  </p>
+  <% } %>
+  <a href="/employees/">View all employees</a>
 </body>
 </html>

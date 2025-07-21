@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>HR name: <%= foundEmployee.user.username %></h1>
+  <h2><%= foundEmployee.name %></h2>
+  <li><%= foundEmployee.position %></li>
+  <li><%= foundEmployee.salary %></li>
+
+  <a href="">Edit Employee Informations</a>
+
+  <% if (foundEmployee.user._id.equals(user._id)) { %>
+    <form action="/employees/<%= foundEmployee._id %>?_method=DELETE" method="POST">
+    <button type="submit" >Delete</button>
+  </form>
+  <% } %>
+  
+</body>
+</html>

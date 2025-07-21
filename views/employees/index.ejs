@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Employees</title>
+</head>
+<body>
+  <h1>View employees</h1>
+  <ul>
+
+    <% foundEmployees.forEach( (employee) => { %>
+      <li><%= employee.name %></li>
+      <li><%= employee.position %></li>
+      <li><%= employee.salary %></li>
+      <a href="/employees/<%= employee._id %>">Manage Employee</a>
+    <% }) %>
+      
+  </ul>
+</body>
+</html>
