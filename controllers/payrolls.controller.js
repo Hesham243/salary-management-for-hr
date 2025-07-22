@@ -9,52 +9,94 @@ router.get('/:employeeId/new', (req, res) => {
 
 
 router.post('/:employeeId', isSignedIn, async (req, res) => {
-  req.body.user = req.session.user._id
-  req.body.employee = req.params.employeeId
-  const createPayroll = await Payroll.create(req.body)
-  res.redirect(`/payrolls/${req.params.employeeId}`)
+  try {
+    req.body.user = req.session.user._id
+    req.body.employee = req.params.employeeId
+
+    console.log(req.body)
+    const createPayroll = await Payroll.create(req.body)
+
+    res.redirect(`/payrolls/${req.params.employeeId}`)
+
+  } catch (error) {
+    console.log(error)
+    res.send('Something went wrong posting payroll in db')
+  }
 })
 
 
 router.get('/:employeeId', async (req, res) => {
-  console.log(req.params.employeeId)
-  const foundPayrolls = await Payroll.find().populate('user').populate('employee')
-  console.log(foundPayrolls)
-  res.render('payrolls/index.ejs', {foundPayrolls: foundPayrolls})
+  try {
+    const foundPayrolls = await Payroll.find().populate('user').populate('employee')
 
+    let payrolls = []
+    foundPayrolls.forEach( (object) => {
+      if (object.employee._id.equals(req.params.employeeId)){
+        payrolls.push(object)
+      }
+    })
+
+    res.render('payrolls/index.ejs', { payrolls: payrolls })
+
+  } catch (error) {
+    console.log(error)
+    res.send('Something went wrong in listing all payroll')    
+  }
 })
 
 
 router.delete('/:employeeId/:payrollId', isSignedIn, async (req, res) => {
-  const foundPayroll = await Payroll.findById(req.params.payrollId).populate('user').populate('employee')
-  if (foundPayroll.user._id.equals(req.session.user._id)){
-    await foundPayroll.deleteOne()
-    console.log('This is the deleted payroll from db:', foundPayroll)
-    return res.redirect(`/payrolls/${req.params.employeeId}`)
-  }else {
-    res.send('Not Authorized')
+  try {
+    const foundPayroll = await Payroll.findById(req.params.payrollId).populate('user').populate('employee')
+
+    if (foundPayroll.user._id.equals(req.session.user._id)){
+      await foundPayroll.deleteOne()
+      return res.redirect(`/payrolls/${req.params.employeeId}`) 
+        
+    }else {
+      res.send('Not Authorized')
+    }
+
+  } catch (error) {
+    console.log(error)
+    res.send('Something went wrong deleting a payroll')    
   }
 })
 
 
 router.get('/:employeeId/:payrollId/edit',isSignedIn , async (req, res) => {
-  const foundPayroll = await Payroll.findById(req.params.payrollId).populate('user').populate('employee')
-  if (foundPayroll.user._id.equals(req.session.user._id)){
-    return res.render('payrolls/edit.ejs', {foundPayroll: foundPayroll})
-  } else {
-    res.send('Not Authorized')
+  try {
+    const foundPayroll = await Payroll.findById(req.params.payrollId).populate('user').populate('employee')
+
+    if (foundPayroll.user._id.equals(req.session.user._id)){
+      return res.render('payrolls/edit.ejs', {foundPayroll: foundPayroll})
+
+    } else {
+      res.send('Not Authorized')
+    }
+
+  } catch (error) {
+    console.log(error)
+    res.send('Something went wrong')
   }
 })
 
 
 router.put('/:employeeId/:payrollId', isSignedIn, async (req, res) => {
-  const foundPayroll = await Payroll.findById(req.params.payrollId).populate('user').populate('employee')
-  if (foundPayroll.user._id.equals(req.session.user._id)){
-    const updatedPayroll = await Payroll.findByIdAndUpdate(req.params.payrollId, req.body, { new: true })
-    console.log('This is the updated payroll from db:', updatedPayroll)
-    return res.redirect(`/payrolls/${foundPayroll.employee._id}`)
-  } else {
-    return res.send('Not Authorized')
+  try {
+    const foundPayroll = await Payroll.findById(req.params.payrollId).populate('user').populate('employee')
+
+    if (foundPayroll.user._id.equals(req.session.user._id)){
+      const updatedPayroll = await Payroll.findByIdAndUpdate(req.params.payrollId, req.body, { new: true })
+      return res.redirect(`/payrolls/${foundPayroll.employee._id}`)
+
+    } else {
+      return res.send('Not Authorized')
+    }
+
+  } catch (error) {
+    console.log(error)
+    res.send('Something went wrong')
   }
 })
 

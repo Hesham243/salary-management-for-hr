@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const  payrollSchema = new Schema({
   pay_date: Date,
-  hourse_worked: Number,
+  hours_worked: Number,
   bonus: Number,
   total_salary: Number,
   user: {

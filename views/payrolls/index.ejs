@@ -1,28 +1,46 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Payroll List</title>
 </head>
 <body>
-  <h2>List of all payrolls for </h2>
+  <h2>List of all payrolls</h2>
 
   <ul>
-  <% foundPayrolls.forEach( (payroll) => { %>
+  <% payrolls.forEach((payroll) => { 
+    const salary = payroll.employee.salary;
+    const workHours = payroll.hours_worked;
+    const bonusPercent = payroll.bonus;
+    let totalSalary = 0;
+    
+    if (workHours !== 160) {
+      const proRated = salary * (workHours / 160);
+      const bonusAmount = proRated * (bonusPercent / 100);
+      totalSalary = proRated + bonusAmount;
+    } else {
+      const bonusAmount = salary * (bonusPercent / 100);
+      totalSalary = salary + bonusAmount;
+    }
+  %>
+
     <li>Employee Name: <%= payroll.employee.name %></li>
     <li>Position: <%= payroll.employee.position %></li>
-    <li>Pay Date: <%= payroll.pay_date %></li>
-    <li>Hours Worked: <%= payroll.hourse_worked %></li>
-    <li>Bonus: <%= payroll.bonus %></li>
+    <li>Pay Date: <%= payroll.pay_date.toDateString() %></li>
+    <li>Hours Worked: <%= payroll.hours_worked %></li>
+    <li>Bonus (%): <%= payroll.bonus %></li>
+    <li><strong>Total Salary:</strong> <%= totalSalary.toFixed(2) %> BHD</li>
+
     <form action="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>?_method=DELETE" method="POST">
       <button type="submit">Delete</button>
     </form>
     <a href="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>/edit">Edit</a>
-    <br>
+    <br><br>
+
   <% }) %>
   </ul>
 
-  
 </body>
 </html>

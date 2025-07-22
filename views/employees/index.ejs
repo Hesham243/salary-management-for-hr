@@ -10,10 +10,12 @@
   <ul>
 
     <% foundEmployees.forEach( (employee) => { %>
-      <li><%= employee.name %></li>
-      <li><%= employee.position %></li>
-      <li><%= employee.salary %></li>
+      <li>Employee Name: <%= employee.name %></li>
+      <li>Employee Position: <%= employee.position %></li>
+      <li>Employee Salary: <%= employee.salary %></li>
       <a href="/employees/<%= employee._id %>">Manage Employee</a>
+      <br>
+      <br>
     <% }) %>
       
   </ul>

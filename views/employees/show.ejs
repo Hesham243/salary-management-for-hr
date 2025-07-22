@@ -8,8 +8,8 @@
 <body>
   <h1>HR name: <%= foundEmployee.user.username %></h1>
   <h2><%= foundEmployee.name %></h2>
-  <li><%= foundEmployee.position %></li>
-  <li><%= foundEmployee.salary %></li>
+  <li>Position: <%= foundEmployee.position %></li>
+  <li>Salary: <%= foundEmployee.salary %></li>
 
   <% if (foundEmployee.user._id.equals(user._id)) { %>
     <form action="/employees/<%= foundEmployee._id %>?_method=DELETE" method="POST">
@@ -19,7 +19,7 @@
   <a href="/employees/<%= foundEmployee._id %>/edit">Edit Employee Informations</a>
 
   <a href="/payrolls/<%= foundEmployee._id %>/new">Add Payroll</a>
-  <a href="/payrolls/<%= foundEmployee._id %>">View Details</a>
+  <a href="/payrolls/<%= foundEmployee._id %>">View Payroll History</a>
   <% } %>
   
 
