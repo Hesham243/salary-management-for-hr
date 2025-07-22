@@ -15,6 +15,10 @@
     <li>Pay Date: <%= payroll.pay_date %></li>
     <li>Hours Worked: <%= payroll.hourse_worked %></li>
     <li>Bonus: <%= payroll.bonus %></li>
+    <form action="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
+    <a href="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>/edit">Edit</a>
     <br>
   <% }) %>
   </ul>

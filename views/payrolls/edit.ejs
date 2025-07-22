@@ -7,21 +7,21 @@
 </head>
 <body>
 
-  <form action="" method="POST">
+  <form action="/payrolls/<%= foundPayroll.employee._id %>/<%= foundPayroll._id %>?_method=PUT" method="POST">
 
     <div>
       <label for="pay_date">Pay Date:</label>
-      <input type="date" name="pay_date" id="pay_date" value="">
+      <input type="date" name="pay_date" id="pay_date" value="<%= foundPayroll.pay_date %>">
     </div>
 
     <div>
       <label for="hourse_worked">Hours Worked:</label>
-      <input type="number" name="hourse_worked" id="hourse_worked" value="">
+      <input type="number" name="hourse_worked" id="hourse_worked" value="<%= foundPayroll.hourse_worked %>">
     </div>
 
     <div>
       <label for="bonus">Bonus:</label>
-      <input type="number" name="bonus" id="bonus" value="">
+      <input type="number" name="bonus" id="bonus" value="<%= foundPayroll.bonus %>">
     </div>
 
     <button type="submit">Create Payroll</button>
