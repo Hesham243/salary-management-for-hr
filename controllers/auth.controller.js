@@ -14,25 +14,40 @@ router.get('/sign-up', (req, res) => {
 
 // POST A NEW USER TO THE DATABASE when the form is submitted
 router.post('/sign-up', async (req, res) => {
-    // get data from the form (req.body)
-    // check if someone already exists
-    // req.body = form data
-    console.log(req)
+
     const userInDatabase = await User.findOne({ username: req.body.username })
     if (userInDatabase) {
         return res.send('Username already taken.')
     }
+
+    const existingEmail = await User.findOne({ email: req.body.email })
+    if (existingEmail) {
+        return res.send('Email is already registered.')
+    }
+
     // check that password and confirmPassword are the same
     if (req.body.password !== req.body.confirmPassword) {
         return res.send('Password and confirm password must match.')
     }
+
     // check for password complexity (LEVEL UP)
     // hash the password
+
+    // const hashedPassword = bcrypt.hashSync(req.body.password, 10)
+    // req.body.password = hashedPassword
+    // const newUser = await User.create(req.body)
+
     const hashedPassword = bcrypt.hashSync(req.body.password, 10)
-    req.body.password = hashedPassword
-    const newUser = await User.create(req.body)
+
+    const newUser = await User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+    })
+
     req.session.user = {
         username: newUser.username,
+        email: newUser.email,
         _id: newUser._id,
     }
     
