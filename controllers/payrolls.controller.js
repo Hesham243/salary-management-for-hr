@@ -28,7 +28,7 @@ router.post('/:employeeId', isSignedIn, async (req, res) => {
 router.get('/:employeeId', async (req, res) => {
   try {
     const foundPayrolls = await Payroll.find().populate('user').populate('employee')
-
+    console.log(foundPayrolls)
     let payrolls = []
     foundPayrolls.forEach( (object) => {
       if (object.employee._id.equals(req.params.employeeId)){

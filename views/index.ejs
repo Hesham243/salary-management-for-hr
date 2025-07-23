@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-<% if (user) { %>
-<h1>Welcome to the app, <%= user.username %>!</h1>
-<a href="/auth/sign-out">Sign out</a>
-<a href="/employees/new">Add  a Employee</a>
-<a href="/employees/">View all employees</a>
-<% } else { %>
-  <h1>Welcome to the app, guest.</h1>
-  <p>
-    <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">sign in</a>.
-  </p>
-  <% } %>
+  <div class="container">
+    <% if (user) { %>
+      <h1>Welcome, <%= user.username %>!</h1>
+      <p>Manage your employee records easily from here.</p>
+      <div class="btn-group">
+        <a href="/employees/new" class="btn">Add Employee</a>
+        <a href="/employees/" class="btn">View All Employees</a>
+        <a href="/auth/sign-out" class="btn btn-secondary">Sign Out</a>
+      </div>
+    <% } else { %>
+      <h1>Welcome to the Salary Management App</h1>
+      <p>Please sign in or create an account to get started.</p>
+      <div class="btn-group">
+        <a href="/auth/sign-up" class="btn">Sign Up</a>
+        <a href="/auth/sign-in" class="btn btn-secondary">Sign In</a>
+      </div>
+    <% } %>
+  </div>
 </body>
 </html>

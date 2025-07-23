@@ -1,45 +1,81 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Payroll List</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </head>
 <body>
-  <h2>List of all payrolls</h2>
+  <div class="container">
+    <h1>All Payroll Records</h1>
 
-  <ul>
-  <% payrolls.forEach((payroll) => { 
-    const salary = payroll.employee.salary;
-    const workHours = payroll.hours_worked;
-    const bonusPercent = payroll.bonus;
-    let totalSalary = 0;
-    
-    if (workHours !== 160) {
-      const proRated = salary * (workHours / 160);
-      const bonusAmount = proRated * (bonusPercent / 100);
-      totalSalary = proRated + bonusAmount;
-    } else {
-      const bonusAmount = salary * (bonusPercent / 100);
-      totalSalary = salary + bonusAmount;
-    } %>
+    <% if (payrolls.length === 0) { %>
+      <p>No payroll records available.</p>
+    <% } else { %>
 
-    <li>Employee Name: <%= payroll.employee.name %></li>
-    <li>Position: <%= payroll.employee.position %></li>
-    <li>Pay Date: <%= payroll.pay_date.toDateString() %></li>
-    <li>Hours Worked: <%= payroll.hours_worked %></li>
-    <li>Bonus (%): <%= payroll.bonus %></li>
-    <li><strong>Total Salary:</strong> <%= totalSalary.toFixed(2) %> BHD</li>
+      <% payrolls.forEach((payroll) => { 
+        const salary = payroll.employee.salary;
+        const workHours = payroll.hours_worked;
+        const bonusPercent = payroll.bonus;
+        let totalSalary = 0;
 
-    <form action="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>?_method=DELETE" method="POST">
-      <button type="submit">Delete</button>
-    </form>
-    <a href="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>/edit">Edit</a>
-    <br><br>
+        if (workHours !== 160) {
+          const proRated = salary * (workHours / 160);
+          const bonusAmount = proRated * (bonusPercent / 100);
+          totalSalary = proRated + bonusAmount;
+        } else {
+          const bonusAmount = salary * (bonusPercent / 100);
+          totalSalary = salary + bonusAmount;
+        }
+      %>
 
-  <% }) %>
-  </ul>
+      <div class="payroll-card">
+        <h2><%= payroll.employee.name %></h2>
+        <p><strong>Position:</strong> <%= payroll.employee.position %></p>
+        <p><strong>Pay Date:</strong> <%= payroll.pay_date.toDateString() %></p>
+        <p><strong>Hours Worked:</strong> <%= payroll.hours_worked %> hrs</p>
+        <p><strong>Bonus:</strong> <%= payroll.bonus %>%</p>
+        <p><strong>Total Salary:</strong> <%= totalSalary.toFixed(2) %> BHD</p>
 
+        <div class="actions">
+          <div class="btn-group">
+
+            <a href="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>/edit" class="btn">✏️ Edit</a>
+            
+          <form action="/payrolls/<%= payroll.employee._id %>/<%= payroll._id %>?_method=DELETE" method="POST">
+            
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              DELETE
+            </button>
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"     aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete this payroll
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-danger">🗑️ DELETE</button>
+                  </div>
+                </div>
+              </div>
+            </div>        
+                
+          </form>
+        </div>
+        </div>
+      </div>
+
+      <% }) %>
+    <% } %>
+  </div>
 </body>
 </html>

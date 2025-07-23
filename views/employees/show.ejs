@@ -1,30 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+
 </head>
 <body>
-  <h1>HR name: <%= foundEmployee.user.username %></h1>
-  <h2><%= foundEmployee.name %></h2>
-  <li>Position: <%= foundEmployee.position %></li>
-  <li>Salary: <%= foundEmployee.salary %></li>
+  <div class="container">
+    <h1>HR Manager: <%= foundEmployee.user.username %></h1>
 
-  <% if (foundEmployee.user._id.equals(user._id)) { %>
-    <form action="/employees/<%= foundEmployee._id %>?_method=DELETE" method="POST">
-    <button type="submit" >Delete</button>
-  </form>
+    <div class="employee-card">
+      <h2><%= foundEmployee.name %></h2>
+      <p><strong>Position:</strong> <%= foundEmployee.position %></p>
+      <p><strong>Salary:</strong> BHD <%= foundEmployee.salary %></p>
+    </div>
+    
+    <% if (foundEmployee.user._id.equals(user._id)) { %>
+      <div class="btn-group">
+        <a href="/employees/<%= foundEmployee._id %>/edit" class="btn">✏️ Edit Employee</a>
 
-  <a href="/employees/<%= foundEmployee._id %>/edit">Edit Employee Informations</a>
+        <form action="/employees/<%= foundEmployee._id %>?_method=DELETE" method="POST">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            DELETE
+          </button>
+          
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to delete <%= foundEmployee.name %> from the directory employee
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary btn-danger">🗑️ DELETE</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
 
-  <a href="/payrolls/<%= foundEmployee._id %>/new">Add Payroll</a>
-  <a href="/payrolls/<%= foundEmployee._id %>">View Payroll History</a>
-  <% } %>
-  
-
-
-
-
+        <a href="/payrolls/<%= foundEmployee._id %>/new" class="btn">Add Payroll</a>
+        <a href="/payrolls/<%= foundEmployee._id %>" class="btn btn-secondary">View Payroll History</a>
+      </div>
+    <% } else { %>
+      <p class="login-link">You do not have permission to manage this employee.</p>
+    <% } %>
+  </div>
 </body>
 </html>

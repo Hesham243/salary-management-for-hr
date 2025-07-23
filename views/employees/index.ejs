@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>All Employees</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-  <h1>View employees</h1>
-  <ul>
+  <div class="container">
+    <h1>Employee Directory</h1>
 
-    <% foundEmployees.forEach( (employee) => { %>
-      <li>Employee Name: <%= employee.name %></li>
-      <li>Employee Position: <%= employee.position %></li>
-      <li>Employee Salary: <%= employee.salary %></li>
-      <a href="/employees/<%= employee._id %>">Manage Employee</a>
-      <br>
-      <br>
-    <% }) %>
-      
-  </ul>
+    <% if (foundEmployees.length > 0) { %>
+      <div class="employee-list">
+        <% foundEmployees.forEach((employee) => { %>
+          <div class="employee-card">
+            <h3><%= employee.name %></h3>
+            <p><strong>Position:</strong> <%= employee.position %></p>
+            <p><strong>Salary:</strong> BHD <%= employee.salary %></p>
+            <a href="/employees/<%= employee._id %>" class="btn btn-secondary">Manage</a>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p>No employees found.</p>
+    <% } %>
+
+    <p class="login-link">
+      <a href="/employees/new">Add New Employee</a>
+    </p>
+  </div>
 </body>
 </html>

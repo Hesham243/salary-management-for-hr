@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Employee</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Test: Edit Page</h1>
+  <div class="container">
+    <h1>Edit Employee: <%= foundEmployee.name %></h1>
 
-  <form action="/employees/<%= foundEmployee._id %>?_method=PUT" method="POST">
+    <form action="/employees/<%= foundEmployee._id %>?_method=PUT" method="POST" class="form-card">
+      <div class="form-group">
+        <label for="name">Employee Name:</label>
+        <input type="text" name="name" id="name" value="<%= foundEmployee.name %>" required />
+      </div>
 
-    <div>
-      <label for="name">Employee Name:</label>
-      <input type="text" name="name" id="name" value="<%= foundEmployee.name %>">
-    </div>
+      <div class="form-group">
+        <label for="position">Employee Position:</label>
+        <input type="text" name="position" id="position" value="<%= foundEmployee.position %>" required />
+      </div>
 
-    <div>
-      <label for="position">Employee Position:</label>
-      <input type="text" name="position" id="position" value="<%= foundEmployee.position %>">
-    </div>
+      <div class="form-group">
+        <label for="salary">Employee Salary:</label>
+        <input type="number" name="salary" id="salary" value="<%= foundEmployee.salary %>" min="0" required />
+      </div>
 
-    <div>
-      <label for="salary">Employee Salary:</label>
-      <input type="text" name="salary" id="salary" value="<%= foundEmployee.salary %>">
-    </div>
-
-    <button type="submit">Update Informations</button>
-  </form>
-  
+      <button type="submit" class="btn">Update Information</button>
+      <a href="/employees/<%= foundEmployee._id %>" class="btn btn-secondary">⬅️ Cancel</a>
+    </form>
+    
+  </div>
 </body>
 </html>
