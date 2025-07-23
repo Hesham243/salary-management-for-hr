@@ -1,3 +1,6 @@
+const upload = require('../config/multer')
+const cloudinary = require('../config/cloudinary')
+
 const express = require('express')
 const router = express.Router()
 const isSignedIn = require('../middleware/is-signed-in')

@@ -8,6 +8,23 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
+  <!-- Centered Navbar -->
+  <nav class="navbar-centered">
+    <div class="nav-inner">
+      <a href="/" class="navbar-logo">💼 SalaryApp</a>
+      <div class="nav-links">
+        <% if (user) { %>
+          <a href="/employees">Employees</a>
+          <!-- <a href="/payrolls">Payrolls</a> -->
+          <a href="/auth/sign-out" class="btn btn-secondary">Sign Out</a>
+        <% } else { %>
+          <a href="/auth/sign-up">Sign Up</a>
+          <a href="/auth/sign-in" class="btn btn-secondary">Sign In</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
     <h1>Employee Directory</h1>
 
@@ -15,6 +32,7 @@
       <div class="employee-list">
         <% foundEmployees.forEach((employee) => { %>
           <div class="employee-card">
+            <img src="<%= employee.image.url %>" class="employee-img" alt="Image of <%= employee.name %>">
             <h3><%= employee.name %></h3>
             <p><strong>Position:</strong> <%= employee.position %></p>
             <p><strong>Salary:</strong> BHD <%= employee.salary %></p>

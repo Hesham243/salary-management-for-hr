@@ -19,6 +19,7 @@ body {
   width: 100%;
   text-align: center;
 }
+
 form {
   display: flex;
   flex-direction: column;
@@ -160,4 +161,63 @@ p {
 
 .employee-card .btn:hover {
   background-color: #5a6268;
+}
+
+.employee-img {
+
+  width: 50%;
+}
+
+
+/* Centered Navbar for Flex Layout */
+.navbar-centered {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.nav-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.navbar-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-links a:hover {
+  background-color: #f0f2f5;
+}
+
+/* Offset for fixed navbar */
+body {
+  padding-top: 80px;
 }

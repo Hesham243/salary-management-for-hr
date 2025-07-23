@@ -13,6 +13,24 @@
 
 </head>
 <body>
+
+  <!-- Centered Navbar -->
+  <nav class="navbar-centered">
+    <div class="nav-inner">
+      <a href="/" class="navbar-logo">💼 SalaryApp</a>
+      <div class="nav-links">
+        <% if (user) { %>
+          <a href="/employees">Employees</a>
+          <!-- <a href="/payrolls">Payrolls</a> -->
+          <a href="/auth/sign-out" class="btn btn-secondary">Sign Out</a>
+        <% } else { %>
+          <a href="/auth/sign-up">Sign Up</a>
+          <a href="/auth/sign-in" class="btn btn-secondary">Sign In</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
     <h1>HR Manager: <%= foundEmployee.user.username %></h1>
 
