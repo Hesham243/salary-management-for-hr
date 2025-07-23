@@ -1,32 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title %></title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
 
-  <body>
-    <!-- Centered Navbar -->
-    <nav class="navbar-centered">
-      <div class="nav-inner">
-        <a href="/" class="navbar-logo">💼 SalaryApp</a>
-        <div class="nav-links">
-          <% if (user) { %>
-            <a href="/employees">Employees</a>
-            <!-- <a href="/payrolls">Payrolls</a> -->
-            <a href="/auth/sign-out" class="btn btn-secondary">Sign Out</a>
-          <% } else { %>
-            <a href="/auth/sign-up">Sign Up</a>
-            <a href="/auth/sign-in" class="btn btn-secondary">Sign In</a>
-          <% } %>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Main Container -->
+  <%- include('./partials/head') %>
     <div class="container">
       <% if (user) { %>
         <h1>Welcome, <%= user.username %>!</h1>
@@ -36,7 +9,7 @@
           <a href="/employees/" class="btn">View All Employees</a>
         </div>
       <% } else { %>
-        <h1>Welcome to the Salary Management App</h1>
+        <h1>Welcome to the Salary Management System</h1>
         <p>Please sign in or create an account to get started.</p>
         <div class="btn-group">
           <a href="/auth/sign-up" class="btn">Sign Up</a>

@@ -1,31 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add New Employee</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/stylesheets/style.css" />
-</head>
-<body>
-  <!-- Centered Navbar -->
-  <nav class="navbar-centered">
-    <div class="nav-inner">
-      <a href="/" class="navbar-logo">💼 SalaryApp</a>
-      <div class="nav-links">
-        <% if (user) { %>
-          <a href="/employees">Employees</a>
-          <!-- <a href="/payrolls">Payrolls</a> -->
-          <a href="/auth/sign-out" class="btn btn-secondary">Sign Out</a>
-        <% } else { %>
-          <a href="/auth/sign-up">Sign Up</a>
-          <a href="/auth/sign-in" class="btn btn-secondary">Sign In</a>
-        <% } %>
-      </div>
-    </div>
-  </nav>
 
-  
+  <%- include('../partials/head') %>  
   <div class="container">
     <h1>Add New Employee</h1>
     <form action="/employees" enctype="multipart/form-data" method="POST" class="form">
@@ -37,10 +11,10 @@
       <input type="text" name="position" id="position" required />
 
       <label for="salary">Employee Monthly Base Salary (BHD)</label>
-      <input type="number" name="salary" id="salary" required />
+      <input type="number" name="salary" id="salary" min="0" required />
 
       <label for="image">Upload Profile Picture</label>
-      <input type="file" accept="image/*" name="image" id="image" class="form-control" required />
+      <input type="file" accept="image/*" name="image" id="image" class="form-control" />
 
       <button type="submit" class="btn">Create Employee</button>
     </form>

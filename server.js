@@ -14,14 +14,12 @@ const employeesController = require('./controllers/employees.controller')
 const payrollsController = require('./controllers/payrolls.controller')
 
 
-
-// DATABASE CONNECTION
 mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name} 🙃.`)
 })
 
-// MIDDLEWARE
+
 app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride('_method'))
 app.use(morgan('dev'))
@@ -40,16 +38,14 @@ app.get('/', (req, res) => {
     res.render('index.ejs', { title: 'Salary Management'})
 })
 
-// ROUTES
-app.use('/auth', authController)
 
+app.use('/auth', authController)
 app.get('/vip-lounge', isSignedIn, (req, res) => {
     res.send(`Welcome ✨`)
 })
-
 app.use('/employees', employeesController)
-
 app.use('/payrolls', payrollsController)
+
 
 const port = process.env.PORT ? process.env.PORT : "3000"
 app.listen(port, () => {

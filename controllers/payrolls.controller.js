@@ -1,12 +1,12 @@
 const upload = require('../config/multer')
 const cloudinary = require('../config/cloudinary')
-
 const express = require('express')
 const router = express.Router()
 const isSignedIn = require('../middleware/is-signed-in')
 const Payroll = require('../models/payroll')
 
-router.get('/:employeeId/new', (req, res) => {
+
+router.get('/:employeeId/new', isSignedIn, (req, res) => {
   res.render('payrolls/new.ejs', { employeeId: req.params.employeeId })
 })
 
@@ -16,7 +16,6 @@ router.post('/:employeeId', isSignedIn, async (req, res) => {
     req.body.user = req.session.user._id
     req.body.employee = req.params.employeeId
 
-    console.log(req.body)
     const createPayroll = await Payroll.create(req.body)
 
     res.redirect(`/payrolls/${req.params.employeeId}`)
@@ -28,10 +27,9 @@ router.post('/:employeeId', isSignedIn, async (req, res) => {
 })
 
 
-router.get('/:employeeId', async (req, res) => {
+router.get('/:employeeId', isSignedIn, async (req, res) => {
   try {
     const foundPayrolls = await Payroll.find().populate('user').populate('employee')
-    console.log(foundPayrolls)
     let payrolls = []
     foundPayrolls.forEach( (object) => {
       if (object.employee._id.equals(req.params.employeeId)){

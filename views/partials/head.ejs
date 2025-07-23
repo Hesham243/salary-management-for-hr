@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salary Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <nav class="navbar-centered">
+    <div class="nav-inner">
+      <a href="/" class="navbar-logo">👀</a>
+      <div class="nav-links">
+        <% if (user) { %>
+          <a href="/" class="btn">Home</a>
+          <a href="/employees" class="btn">Employees</a>
+          <a href="/auth/sign-out" class="btn">Sign Out</a>
+        <% } else { %>
+          <a href="/auth/sign-up" class="btn">Sign Up</a>
+          <a href="/auth/sign-in" class="btn">Sign In</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>

@@ -1,19 +1,16 @@
 const upload = require('../config/multer')
 const cloudinary = require('../config/cloudinary')
-
 const express = require('express')
 const router = express.Router()
 const isSignedIn = require('../middleware/is-signed-in')
 const Employee = require('../models/employee')
 
 
-// get the user new form to add employee
-router.get('/new', (req, res) => {
+router.get('/new', isSignedIn, (req, res) => {
   res.render('employees/new.ejs') 
 })
 
 
-// post the new employee to the db
 router.post('/', isSignedIn,  upload.single('image'), async (req, res) => {
   try {
     req.body.user = req.session.user._id
@@ -32,11 +29,9 @@ router.post('/', isSignedIn,  upload.single('image'), async (req, res) => {
 })
 
 
-//  getting all employees from db and rendering them in employees.index.ejs
-router.get('/', async (req, res) => {
+router.get('/', isSignedIn, async (req, res) => {
   try {
     const foundEmployees = await Employee.find({user: req.session.user._id})
-    
     res.render('employees/index.ejs', {foundEmployees: foundEmployees})
 
   } catch (error) {
@@ -46,8 +41,7 @@ router.get('/', async (req, res) => {
 })
 
 
-// getting a specific employee from db then rendering him to employees/show.ejs
-router.get('/:employeeId', async (req, res) => {
+router.get('/:employeeId', isSignedIn, async (req, res) => {
   try {
     const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
      
@@ -64,7 +58,6 @@ router.get('/:employeeId', async (req, res) => {
 })
 
 
-// This route delete specific employee from db and redirect to view all employees
 router.delete('/:employeeId', isSignedIn, async (req, res) => {
   try {
     const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
@@ -90,7 +83,6 @@ router.delete('/:employeeId', isSignedIn, async (req, res) => {
 })
 
 
-// getting a specific employee from db then rendering it to employees/edit.ejs
 router.get('/:employeeId/edit', isSignedIn, async (req, res) => {
   try {
     const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
@@ -112,7 +104,6 @@ router.get('/:employeeId/edit', isSignedIn, async (req, res) => {
 })
 
 
-// updating employee information from db
 router.put('/:employeeId', isSignedIn, async (req, res) => {
   try {
     const foundEmployee = await Employee.findById(req.params.employeeId).populate('user')
