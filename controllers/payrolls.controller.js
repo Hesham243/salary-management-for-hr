@@ -29,15 +29,15 @@ router.post('/:employeeId', isSignedIn, async (req, res) => {
 
 router.get('/:employeeId', isSignedIn, async (req, res) => {
   try {
-    const foundPayrolls = await Payroll.find().populate('user').populate('employee')
-    let payrolls = []
-    foundPayrolls.forEach( (object) => {
-      if (object.employee._id.equals(req.params.employeeId)){
-        payrolls.push(object)
+    const foundPayrolls = await Payroll.find({ employee: req.params.employeeId }).populate('user').populate('employee')
+    
+    foundPayrolls.forEach( (payroll) => {
+      if (!payroll.user._id.equals(req.session.user._id)) {
+        return res.send('Oops. Dont you know its not allowed to see others data???')
       }
     })
 
-    res.render('payrolls/index.ejs', { payrolls: payrolls })
+    res.render('payrolls/index.ejs', { payrolls: foundPayrolls })
 
   } catch (error) {
     console.log(error)

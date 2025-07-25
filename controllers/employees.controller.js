@@ -74,6 +74,7 @@ router.delete('/:employeeId', isSignedIn, async (req, res) => {
       await foundEmployee.deleteOne()
       return res.redirect('/employees')
     }
+
     return res.send('Not Authorized')
 
   } catch (error) {
